@@ -123,11 +123,12 @@ niter <- 10000
 # etc... (more needed here)
 #################################################
 
-#Dir = "data/"
-#file = paste("blr_data_",sim_num,".csv")
+DIR = "data"
+file = paste("blr_data_",sim_num,".csv",sep="")
+f.p <- file.path(DIR, file)
 
 # Read data corresponding to appropriate sim_num:
-Data = read.csv(paste("blr_data_",sim_num,".csv",sep=""), header=TRUE)
+Data = read.csv(f.p, header=TRUE)
 
 # Extract X and y:
 m = as.matrix(Data$n)
