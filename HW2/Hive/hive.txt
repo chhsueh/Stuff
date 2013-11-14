@@ -1,0 +1,36 @@
+
+##################### CORRECT  #########################################
+CREATE EXTERNAL TABLE GpData(
+ g INT,
+ v FLOAT) 
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE;
+LOAD DATA INPATH '/user/hadoop/data/groups.txt' OVERWRITE INTO TABLE GpData;
+
+CREATE TABLE Mean(
+ g INT,
+ m FLOAT
+);
+
+CREATE TABLE Var(
+ g INT,
+ v FLOAT
+);
+
+
+
+
+#means
+INSERT OVERWRITE TABLE Mean SELECT g, AVG(v) FROM GpData GROUP BY g; 
+insert overwrite local directory '/home/hadoop/AVG/' select m from Mean ;
+#variance
+INSERT OVERWRITE TABLE Var SELECT g, VARIANCE(v) FROM GpData GROUP BY g;
+insert overwrite local directory '/home/hadoop/Var/' select v from Var ;
+#download
+
+#######################################################################
+
+
+
+
+
